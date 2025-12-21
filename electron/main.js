@@ -1,4 +1,7 @@
-import { app, BrowserWindow } from "electron";
+// @ts-check
+
+const { app, BrowserWindow } = require("electron");
+
 
 function createWindow() {
   const win = new BrowserWindow({
