@@ -11,6 +11,7 @@ export default function Billing() {
     name: "",
     phone: "",
     email: "",
+    GSTIN:""
   });
   
   // Items state
@@ -106,6 +107,11 @@ export default function Billing() {
   customer.name.trim() !== "" && validItems.length > 0;
   
   
+  const openPreview = (type) => {
+  navigate(`/preview/${type}`, {
+    state: invoicePayload,
+  });
+};
   
 
 
@@ -152,6 +158,13 @@ export default function Billing() {
                 value={customer.email}
                 onChange={handleCustomerChange}
                 placeholder="Email Address"
+                className="border rounded-lg px-3 py-2"
+              />
+              <input
+                name="GSTIN"
+                value={customer.gstin}
+                onChange={handleCustomerChange}
+                placeholder="Customer GSTIN"
                 className="border rounded-lg px-3 py-2"
               />
             </div>
@@ -254,33 +267,31 @@ export default function Billing() {
 
       {/* Footer */}
       <footer className="bg-white border-t px-6 py-4 flex justify-end gap-4">
-        <button
-          onClick={() => generatePdf("Quotation", invoicePayload)}
-          disabled={!isInvoiceValid}
-          className="px-4 py-2 rounded-lg bg-gray-200"
-        >
-          View Quotation
-        </button>
 
         <button
-          onClick={() => generatePdf("Bill", invoicePayload)}
-          disabled={!isInvoiceValid}
-          className="px-4 py-2 rounded-lg bg-gray-200"
+        disabled={!isInvoiceValid}
+        onClick={() => openPreview("bill")}
+        className={`px-4 py-2 rounded-lg text-white ${isInvoiceValid ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
         >
           View Bill
         </button>
 
         <button
-          onClick={() => generatePdf("Invoice", invoicePayload)}
-          disabled={!isInvoiceValid}
-          className={`px-4 py-2 rounded-lg ${
-            !isInvoiceValid
-              ? "bg-gray-300 cursor-not-allowed"
-              : "bg-blue-600 text-white"
-          }`}
+        disabled={!isInvoiceValid}
+        onClick={() => openPreview("quotation")}
+        className={`px-4 py-2 rounded-lg text-white ${isInvoiceValid ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
+        >
+          View Quotation
+        </button>
+
+        <button
+        disabled={!isInvoiceValid}
+        onClick={() => openPreview("invoice")}
+        className={`px-4 py-2 rounded-lg text-white  ${isInvoiceValid ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-400 cursor-not-allowed"}`}
         >
           View Invoice
         </button>
+
       </footer>
 
     </div>
