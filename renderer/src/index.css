@@ -1,1 +1,6 @@
 @import "tailwindcss";
+
+
+:root {
+  --brand-bg: #FEF8E6;
+}
